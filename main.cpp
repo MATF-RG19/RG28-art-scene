@@ -1,12 +1,17 @@
 #include <GL/glut.h>
 #include <string>
+#include <iostream>
+#include "./headers/pso.hpp"
 
 #define ESC 27
 #define unused(x) ((void) x)
-#define window_width (600)
-#define window_height (600)
+#define window_width (1000)
+#define window_height (1000)
+#define size 0.1
 
+static void register_callbacks();
 static void on_keyboard(unsigned char key, int x, int y);
+static void on_display(void);
 
 int main(int argc, char** argv)
 {
@@ -14,11 +19,10 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 
     glutInitWindowSize(window_width, window_height);
-    glutInitWindowPosition(100, 100);
+    glutInitWindowPosition(500, 500);
     glutCreateWindow("Art scene");
 
-    glClearColor(0.75, 0.75, 0.75, 0);
-    glutKeyboardFunc(on_keyboard);
+    register_callbacks();
     glEnable(GL_DEPTH_TEST);
 
 	glutMainLoop();
@@ -37,4 +41,18 @@ static void on_keyboard(unsigned char key, int x, int y)
         break;
     }
 }
+
+static void on_display(void)
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    PSO().start();
+    glutPostRedisplay();
+    glutSwapBuffers();
+}
+
+static void register_callbacks() {
+    glutKeyboardFunc(on_keyboard);
+    glutDisplayFunc(on_display); 
+}
+
 
