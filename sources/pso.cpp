@@ -11,7 +11,7 @@
 #define LO (0.0)
 #define MAX_ITER (100)
 #define size (0.01)
-#define FUNC(x) (x*x*x + x - 18)
+#define FUNC(x) (1.0/(1.0 + exp(-x)))
 #define NUM_PARTICLES (5)
 #define NUM_MICROSECS (10)
 
@@ -91,7 +91,7 @@ double PSO::start() {
    std::mt19937 gen(rd());
    std::uniform_real_distribution<> runif(LO, UP);
    int iter = 0;
-
+   
    while (iter < MAX_ITER) {
       for (auto particle : m_swarm) {
          particle->updateVelocity(
@@ -100,7 +100,7 @@ double PSO::start() {
             (particle->acceler_coef() * runif(gen)) * (m_global_best -  particle->position())
          );
          particle->updatePosition();
-
+         
          // Find local best position
          if (FUNC(-particle->position()) > particle->fitness()) {
             particle->m_best = particle->position();
@@ -119,10 +119,10 @@ double PSO::start() {
                   , particle->position());
          // TODO Play with parameters
          glBegin(GL_TRIANGLE_FAN);
-             glVertex3f(particle->best() - size / 2, particle->fitness() * particle->fitness() - size / 2, particle->fitness());
-             glVertex3f(particle->best() - particle->position() + size / 2, particle->fitness() * particle->fitness() - size / 2, 10);
-             glVertex3f(particle->position() - particle->fitness() + size / 2, particle->fitness() * particle->fitness() + size / 2, particle->best());
-             glVertex3f(particle->best() - particle->fitness() - size / 2, particle->fitness() * particle->fitness() + size / 2, 0);
+            glVertex3f(particle->fitness() - size / 2, particle->best() - size / 2, 0);
+            glVertex3f(particle->fitness() + size / 2, particle->best() - size / 2, 0);
+            glVertex3f(particle->fitness() + size / 2, particle->best() + size / 2, 0);
+            glVertex3f(particle->fitness() - size / 2, particle->best() + size / 2, 0);
          glEnd();
          std::this_thread::sleep_for(std::chrono::microseconds(NUM_MICROSECS));
       }

@@ -9,7 +9,7 @@
 #define window_height (1000)
 #define size 0.1
 
-static void register_callbacks();
+static void register_callbacks(void);
 static void on_keyboard(unsigned char key, int x, int y);
 static void on_display(void);
 
