@@ -14,5 +14,6 @@ pso.o: sources/pso.cpp headers/pso.hpp
 clean:
 	@rm -f *.o main
 
+.PHONY: run
 run:
-	./main
+	@./main
