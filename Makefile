@@ -13,3 +13,6 @@ pso.o: sources/pso.cpp headers/pso.hpp
 
 clean:
 	@rm -f *.o main
+
+run:
+	./main
