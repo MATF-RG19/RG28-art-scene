@@ -7,10 +7,10 @@
 #define unused(x) ((void) x)
 #define window_width (1000)
 #define window_height (1000)
-#define size 0.1
+#define window_position (500)
 
 static void register_callbacks(void);
-static void on_keyboard(unsigned char key, int x, int y);
+static void on_keyboard(unsigned char, int, int);
 static void on_display(void);
 
 int main(int argc, char** argv)
@@ -19,11 +19,12 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 
     glutInitWindowSize(window_width, window_height);
-    glutInitWindowPosition(500, 500);
+    glutInitWindowPosition(window_position, window_position);
     glutCreateWindow("Art scene");
 
     register_callbacks();
     glEnable(GL_DEPTH_TEST);
+    glClearColor(1, 1, 1, 1);
 
 	glutMainLoop();
 
@@ -54,5 +55,4 @@ static void register_callbacks() {
     glutKeyboardFunc(on_keyboard);
     glutDisplayFunc(on_display); 
 }
-
 

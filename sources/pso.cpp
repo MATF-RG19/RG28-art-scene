@@ -9,10 +9,10 @@
 
 #define UP (1.0)
 #define LO (0.0)
-#define MAX_ITER (100)
-#define size (0.01)
+#define MAX_ITER (1000)
+#define size (0.1)
 #define FUNC(x) (1.0/(1.0 + exp(-x)))
-#define NUM_PARTICLES (5)
+#define NUM_PARTICLES (15)
 #define NUM_MICROSECS (10)
 
 Particle::Particle() {
@@ -100,34 +100,30 @@ double PSO::start() {
             (particle->acceler_coef() * runif(gen)) * (m_global_best -  particle->position())
          );
          particle->updatePosition();
-         
          // Find local best position
          if (FUNC(-particle->position()) > particle->fitness()) {
             particle->m_best = particle->position();
             particle->m_fitness = (1.0 / (1.0 + exp(-(particle->position()))));
 
          }
-
          // Find global best position
          if ((1.0 / (1.0 + exp(-(m_global_best)))) > particle->fitness()) {
             m_global_best = particle->position();
          }
-
          // Change color
          glColor3f(particle->best() + particle->fitness()
                   , particle->fitness()
                   , particle->position());
          // TODO Play with parameters
          glBegin(GL_TRIANGLE_FAN);
-            glVertex3f(particle->fitness() - size / 2, particle->best() - size / 2, 0);
-            glVertex3f(particle->fitness() + size / 2, particle->best() - size / 2, 0);
-            glVertex3f(particle->fitness() + size / 2, particle->best() + size / 2, 0);
-            glVertex3f(particle->fitness() - size / 2, particle->best() + size / 2, 0);
+            glVertex3f(cos(particle->fitness() - size / 2), particle->best() - size / 2, 0);
+            glVertex3f(sin(particle->position() + size / 2), particle->position() - size / 2, 0);
+            glVertex3f(sin(particle->position() + size / 2), particle->position() + size / 2, 0);
+            glVertex3f(sin(particle->fitness() - size / 2), particle->best() + size / 2, 0);
          glEnd();
          std::this_thread::sleep_for(std::chrono::microseconds(NUM_MICROSECS));
       }
-      // TODO Program doesn't work if next line is deleted
-      std::cout << iter++ << std::endl;
+      iter++;
    }
    return m_global_best;
 }
