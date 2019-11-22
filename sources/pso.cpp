@@ -10,10 +10,10 @@
 #define UP (1.0)
 #define LO (0.0)
 #define MAX_ITER (1000)
-#define size (0.1)
+#define size (0.4)
 #define FUNC(x) (1.0/(1.0 + exp(-x)))
-#define NUM_PARTICLES (15)
-#define NUM_MICROSECS (10)
+#define NUM_PARTICLES (55)
+#define NUM_MICROSECS (1)
 
 Particle::Particle() {
    std::random_device rd;
@@ -104,23 +104,22 @@ double PSO::start() {
          if (FUNC(-particle->position()) > particle->fitness()) {
             particle->m_best = particle->position();
             particle->m_fitness = (1.0 / (1.0 + exp(-(particle->position()))));
-
          }
          // Find global best position
          if ((1.0 / (1.0 + exp(-(m_global_best)))) > particle->fitness()) {
             m_global_best = particle->position();
          }
-         // Change color
-         glColor3f(particle->best() + particle->fitness()
+         // Set color
+         glColor3f(abs(m_global_best/1000)
                   , particle->fitness()
                   , particle->position());
-         // TODO Play with parameters
+         
          glBegin(GL_TRIANGLE_FAN);
-            glVertex3f(cos(particle->fitness() - size / 2), particle->best() - size / 2, 0);
-            glVertex3f(sin(particle->position() + size / 2), particle->position() - size / 2, 0);
-            glVertex3f(sin(particle->position() + size / 2), particle->position() + size / 2, 0);
+            glVertex3f(sin(particle->position()), particle->position() + size / 2, 0);
+            glVertex3f(sin(particle->position()), particle->position() - size / 2, 0);
             glVertex3f(sin(particle->fitness() - size / 2), particle->best() + size / 2, 0);
          glEnd();
+         // To make animation a bit smoother
          std::this_thread::sleep_for(std::chrono::microseconds(NUM_MICROSECS));
       }
       iter++;
