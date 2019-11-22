@@ -14,6 +14,7 @@ static void on_keyboard(unsigned char, int, int);
 static void on_display(void);
 static void init(void);
 static void window_init(int, char**);
+static void on_reshape(int, int);
 
 int main(int argc, char** argv)
 {
@@ -52,6 +53,14 @@ static void on_keyboard(unsigned char key, int x, int y)
     }
 }
 
+static void on_reshape(int width, int height)
+{
+    glViewport(0, 0, width, height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    //gluPerspective(90, (float) width / height, -1, 1);
+}
+
 static void on_display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -64,5 +73,6 @@ static void on_display(void)
 
 static void register_callbacks(void) {
     glutKeyboardFunc(on_keyboard);
-    glutDisplayFunc(on_display); 
+    glutDisplayFunc(on_display);
+    glutReshapeFunc(on_reshape);
 }
