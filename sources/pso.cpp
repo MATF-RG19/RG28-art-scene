@@ -10,10 +10,10 @@
 #define UP (1.0)
 #define LO (0.0)
 #define MAX_ITER (1000)
-#define size (0.4)
+#define size (0.1)
 #define FUNC(x) (1.0/(1.0 + exp(-x)))
 #define NUM_PARTICLES (55)
-#define NUM_MICROSECS (1)
+#define NUM_MICROSECS (0)
 
 Particle::Particle() {
    std::random_device rd;
@@ -110,15 +110,17 @@ double PSO::start() {
             m_global_best = particle->position();
          }
          // Set color
-         glColor3f(abs(m_global_best/1000)
+         glColor3f(1
                   , particle->fitness()
                   , particle->position());
          
          glBegin(GL_TRIANGLE_FAN);
+            glVertex3f(cos(particle->position()) / 2, particle->position() + size / 2, 0);
             glVertex3f(sin(particle->position()), particle->position() + size / 2, 0);
             glVertex3f(sin(particle->position()), particle->position() - size / 2, 0);
             glVertex3f(sin(particle->fitness() - size / 2), particle->best() + size / 2, 0);
          glEnd();
+         glRotatef(particle->fitness(), particle->position(), particle->position(), particle->position());
          // To make animation a bit smoother
          std::this_thread::sleep_for(std::chrono::microseconds(NUM_MICROSECS));
       }

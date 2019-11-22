@@ -12,23 +12,32 @@
 static void register_callbacks(void);
 static void on_keyboard(unsigned char, int, int);
 static void on_display(void);
+static void init(void);
+static void window_init(int, char**);
 
 int main(int argc, char** argv)
 {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-
-    glutInitWindowSize(window_width, window_height);
-    glutInitWindowPosition(window_position, window_position);
-    glutCreateWindow("Art scene");
-
+    window_init(argc, argv);
+    init();
     register_callbacks();
-    glEnable(GL_DEPTH_TEST);
-    glClearColor(1, 1, 1, 1);
-
 	glutMainLoop();
 
 	return 0;
+}
+
+static void window_init(int argc, char** argv)
+{
+    glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+    glutInitWindowSize(window_width, window_height);
+    glutInitWindowPosition(window_position, window_position);
+    glutCreateWindow("Art scene");
+}
+
+static void init(void)
+{
+    glEnable(GL_DEPTH_TEST);
+    glClearColor(1, 1, 1, 1);
 }
 
 static void on_keyboard(unsigned char key, int x, int y)
