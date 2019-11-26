@@ -58,15 +58,19 @@ static void on_reshape(int width, int height)
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    //gluPerspective(90, (float) width / height, -1, 1);
+    gluPerspective(90, (float) width / height, -5, 5);
 }
 
 static void on_display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   	glMatrixMode(GL_MODELVIEW);
+   	
+    glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    gluLookAt(0, 0, 0, 1, 2, 3, 0, 0, 5);
+    
     PSO().start();
+    
     glutPostRedisplay();
     glutSwapBuffers();
 }

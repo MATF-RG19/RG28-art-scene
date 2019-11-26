@@ -112,15 +112,17 @@ double PSO::start() {
          // Set color
          glColor3f(1
                   , particle->fitness()
-                  , particle->position());
+                  , abs(particle->position()));
          
          glBegin(GL_TRIANGLE_FAN);
-            glVertex3f(cos(particle->position()) / 2, particle->position() + size / 2, 0);
-            glVertex3f(sin(particle->position()), particle->position() + size / 2, 0);
-            glVertex3f(sin(particle->position()), particle->position() - size / 2, 0);
+            glVertex3f(cos(particle->position()) / 2, particle->position() + size / 2, 3);
+            glVertex3f(sin(particle->position()), particle->position() + size / 2, 4);
+            glVertex3f(sin(particle->position()), particle->position() - size / 2, 2);
             glVertex3f(sin(particle->fitness() - size / 2), particle->best() + size / 2, 0);
          glEnd();
          glRotatef(particle->fitness(), particle->position(), particle->position(), particle->position());
+         glColor3f(0,1,0);
+         glutSolidCube(particle->fitness());
          // To make animation a bit smoother
          std::this_thread::sleep_for(std::chrono::microseconds(NUM_MICROSECS));
       }
