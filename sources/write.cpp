@@ -1,6 +1,8 @@
 #include <GL/glut.h>
 #include <iostream>
 
+// Function for drawing string name on the screen
+// The position is controlled by double x, double y parameters
 void draw_name(std::string name, double x, double y)
 {
     int current_width = glutGet(GLUT_WINDOW_WIDTH);

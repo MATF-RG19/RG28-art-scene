@@ -21,7 +21,6 @@ static void on_display(void);
 static void init(void);
 static void window_init(int, char **);
 static void on_reshape(int, int);
-static void init_material(void);
 static void init_lights(void);
 
 static int pso_param_1 = 3;
@@ -130,10 +129,8 @@ static void on_display(void)
     gluLookAt(0, 5, 5,
               0, 0, 0,
               1, 0, 0);
-
     init_lights();
-
-    // Make a signature in right bottom corner
+    // Make the signature in right bottom corner
     draw_name("BY TIJANA JEVTIC", 200, 95);
     // Start the animation instance
     auto instance = new PSO();

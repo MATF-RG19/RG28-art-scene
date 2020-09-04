@@ -25,8 +25,8 @@ private:
     double m_best;
     double m_fitness;
     double m_velocity;
+    // The best values for this constants according to algorithm
     const double m_acceler_coef = 1.49618;
-    // TODO vary inertia (w) from 0.9 to 0.4 over time
     const double m_inertia = 0.7298;
 };
 
@@ -36,6 +36,8 @@ public:
     PSO() {}
     ~PSO();
     void create_population(int);
+    // param1 and param2 come from main display function
+    // They are controlled by user
     double start(int param1, double param2);
 
 private:
