@@ -11,7 +11,7 @@ pso.o: sources/pso.cpp headers/pso.hpp
 	$(CC) $(CFLAGS) -c sources/pso.cpp $(LDLIBS)
 image.o: sources/image.cpp headers/image.h
 	$(CC) $(CFLAGS) -c sources/image.cpp $(LDLIBS)
-textures.o: sources/textures.cpp headers/textures.h
+textures.o: sources/textures.cpp headers/textures.hpp
 	$(CC) $(CFLAGS) -c sources/textures.cpp $(LDLIBS)
 write.o: sources/write.cpp headers/write.hpp
 	$(CC) $(CFLAGS) -c sources/write.cpp $(LDLIBS)
