@@ -1,5 +1,5 @@
-#ifndef WRITE_HPP
-#define WRITE_HPP
+#ifndef _WRITE_HPP
+#define _WRITE_HPP
 
 #include <GL/glut.h>
 #include <iostream>
