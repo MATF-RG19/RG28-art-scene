@@ -41,10 +41,11 @@ After playing with animation:
 make clean
 ```
 
-Used librairies:
+### Librairies
+
 OpenGL, glut, image.h
 
-Code structure:
+### Code structure
 
 All of the libraries, headers are in ./headers, all of the source files are in ./sources.
 In ./textures are bmp images of used textures.
