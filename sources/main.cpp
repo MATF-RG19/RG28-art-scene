@@ -24,6 +24,9 @@ static void on_reshape(int, int);
 static void init_material(void);
 static void init_lights(void);
 
+static int pso_param_1 = 3;
+static double pso_param_2 = .5;
+
 int main(int argc, char **argv)
 {
     window_init(argc, argv);
@@ -76,6 +79,14 @@ static void on_keyboard(unsigned char key, int x, int y)
     case ESC:
         exit(0);
         break;
+    case 'T':
+    case 't':
+        pso_param_1 += 1;
+        break;
+    case 'J':
+    case 'j':
+        pso_param_2 += 0.3;
+        break;
     }
 }
 
@@ -110,22 +121,6 @@ static void init_lights(void)
     glLightfv(GL_LIGHT1, GL_SPECULAR, specular);
 }
 
-static void init_material(void)
-{
-    // Setup colors
-    GLfloat ambient[] = {0.3, 0, 0, 1};
-    GLfloat diffuse[] = {1, 1, 0, 1};
-    GLfloat specular[] = {0.1, 0.4, 1, 1};
-    GLfloat shininess = 1;
-
-    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 1);
-    // Attach colors
-    glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-    glMaterialf(GL_FRONT, GL_SHININESS, shininess);
-}
-
 static void on_display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -137,13 +132,12 @@ static void on_display(void)
               1, 0, 0);
 
     init_lights();
-    // init_material();
 
     // Make a signature in right bottom corner
     draw_name("BY TIJANA JEVTIC", 200, 95);
     // Start the animation instance
     auto instance = new PSO();
-    instance->start();
+    instance->start(pso_param_1, pso_param_2);
 
     glutPostRedisplay();
     glutSwapBuffers();

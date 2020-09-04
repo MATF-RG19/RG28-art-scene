@@ -11,10 +11,10 @@
 
 #define UP (1.0)
 #define LO (0.0)
-#define MAX_ITER (60)
-#define size (0.1)
+#define MAX_ITER (30)
+#define size (0.9)
 #define FUNC(x) (1.0 / (1.0 + exp(-x)))
-#define NUM_PARTICLES (55)
+#define NUM_PARTICLES (85)
 #define NUM_MICROSECS (0)
 
 Particle::Particle()
@@ -102,7 +102,7 @@ void PSO::create_population(int population_size)
    }
 }
 
-double PSO::start()
+double PSO::start(int param1, double param2)
 {
    create_population(NUM_PARTICLES);
    std::random_device rd;
@@ -167,15 +167,21 @@ double PSO::start()
          glColor3f(0, 1, abs(particle->position()));
          if (particle->fitness() > 0)
          {
-            glutSolidTorus(particle->position() * 0.3, particle->fitness() * 6, NUMBER_OF_TEXTURES, 13);
+            glutSolidTorus(particle->position() * param1 / 10, particle->fitness() * 6, NUMBER_OF_TEXTURES, 13);
          }
-
+         // WIRE OBJECTS - they add great visual impression, as well as the impression of randomness
+         glColor3f(abs(m_global_best) * particle->position(), particle->fitness(), particle->position());
+         glutWireCube(abs(particle->position()));
+         glutWireTorus(particle->position(), particle->fitness() * 6, NUMBER_OF_TEXTURES, 13);
+         glPushMatrix();
+         glRotatef(particle->fitness(), m_global_best, 1, 0);
+         glScalef(particle->velocity(), 0, 0);
+         glutWireCube(abs(particle->position()) * param2);
+         glPopMatrix();
          // Draw 0 and + mainly in the lower part of the scene
+         glColor3f(0, 1, abs(particle->position()));
          draw_name(std::to_string(0), particle->fitness() * 1000 * m_global_best, particle->best() * 100);
          draw_name("+", 1000 * particle->position(), particle->best() * 100);
-
-         // To make animation a bit smoother
-         // std::this_thread::sleep_for(std::chrono::microseconds(NUM_MICROSECS));
       }
       iter++;
    }
